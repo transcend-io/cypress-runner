@@ -1,0 +1,26 @@
+{
+    "name": "cypress-runner",
+    "version": "1.0.0",
+    "description": "Image for running cypress tests",
+    "license": "MIT",
+    "repository": {
+      "type": "git",
+      "url": "git://github.com/transcend-io/cypress-runner"
+    },
+    "bugs": {
+      "url": "https://github.com/transcend-io/cypress-runner/issues"
+    },
+    "main": ".",
+    "engines": {
+    },
+    "author": "Transcend Inc.",
+    "scripts": {
+      "####### Build #######": "",
+      "build": "docker build -f \"./Dockerfile\" ."
+    },
+    "dependencies": {
+    },
+    "devDependencies": {
+    }
+}
+  
