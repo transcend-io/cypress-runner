@@ -19,7 +19,7 @@ COPY package.json /app/package.json
 COPY cypress.json /app/cypress.json
 
 # Install Cypress and verify the installation
-RUN npm install cypress@3.1.3 \
+RUN npm install cypress@3.1.5 \
  && ln -s $(pwd)/node_modules/.bin/cypress /usr/local/bin/cypress \
  && cypress verify \
  && cypress --version
