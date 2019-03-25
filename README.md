@@ -1,6 +1,6 @@
 # cypress-runner
 
-A public docker image that is pre-built for running cypress tests. This repository is auto-build by docker and the image can be downloaded from `transcendio/cypress-runner`.
+A public Docker image that is pre-built for running [Cypress](https://www.cypress.io/) tests. This repository is auto-built by Docker and the image can be downloaded from `transcendio/cypress-runner`.
 
 ## Setup
 
