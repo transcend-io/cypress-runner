@@ -1,28 +1,32 @@
-# Args
-ARG baseUrl=https://yo.com:4021
-ARG record=false
-ARG projectId=TODO
+# Node image
+ARG NODE_IMAGE=10.15.0-alpine
 
-# Use the Cypress base image
-FROM cypress/browsers:chrome69
+# Image for building
+FROM node:${NODE_IMAGE} AS npm_compiler
 
-ENV CI=true
-ENV CYPRESS_baseUrl=${baseUrl}
-ENV CYPRESS_projectId=${projectId}
+# Versions
+ARG NPM_VERSION=6.4.1
+ARG TS_NODE_VERSION=8.3.0
+ARG DOCKER_COMPOSE_VERSION=1.21.2
 
-# Set working directory
-RUN mkdir /app
-WORKDIR /app
+# Install packages
+RUN mkdir -p /base
+WORKDIR /base
 
-# Copy over package.json and cypress.json
-COPY package.json /app/package.json
-COPY cypress.json /app/cypress.json
+# Copy over application code
+COPY package.json package-lock.json /base/
 
-# Install Cypress and verify the installation
-RUN npm install cypress@3.1.5 \
- && ln -s $(pwd)/node_modules/.bin/cypress /usr/local/bin/cypress \
- && cypress verify \
- && cypress --version
+# Install npm
+RUN npm i -g npm@${NPM_VERSION}
+RUN npm i ts-node@${TS_NODE_VERSION}
 
-# Test runner
-CMD ["cypress", "run", "--record", $record]
+# Install python and pip
+RUN apk add --no-cache \
+    python3
+
+# Install pre-commit, docker-compose,awscli
+ENV PATH="$HOME/.local/bin:/root/.local/bin:${PATH}"
+RUN pip3 install --upgrade pip
+# RUN pip install --upgrade pip
+RUN pip3 install --user 'pyyaml==3.12' pre-commit pathlib2 docker-compose==${DOCKER_COMPOSE_VERSION}
+RUN pip3 install --user --upgrade awscli && export PATH=$PATH:$HOME/.local/bin
